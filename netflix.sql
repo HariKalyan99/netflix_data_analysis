@@ -78,11 +78,16 @@ ORDER BY rating_count DESC
 limit 1;
 
 -- 3. List all movies released in a specific year (e.g., 2020)
-select title, release_year from netflix where release_year = '2020';
-
+select title, release_year from netflix where release_year = '2020' and type = 'Movie';
+select title, release_year from netflix where release_year = '2020' limit 1;
 
 -- 4. Find the top 5 countries with the most content on Netflix
+select distinct country from netflix;
 
+-- 
+select country, count(show_id) as total_content from netflix group by 1;
+
+select string_to_array country from netflix;
 
 
 -- 5. Identify the longest movie
