@@ -87,11 +87,41 @@ select distinct country from netflix;
 -- 
 select country, count(show_id) as total_content from netflix group by 1;
 
-select string_to_array country from netflix;
+select unnest(string_to_array(country, ',')) as new_country_array, count(show_id) as
+total_count from netflix group by 1 order by 2 desc limit 5;
+
+select
+	string_to_array(country, ',') as new_country_array
+from netflix;
+
+select
+	unnest(string_to_array(country, ',')) as new_country_array
+from netflix;
 
 
 -- 5. Identify the longest movie
+
+SELECT *
+FROM netflix
+WHERE duration = (SELECT MAX(duration) FROM netflix);
+
+-- 
+
+select * from netflix
+where type = 'Movie';
+
+SELECT DISTINCT duration FROM netflix ORDER BY duration DESC;
+
+
+
+
 -- 6. Find content added in the last 5 years
+
+select * from netflix where  to_date(date_added, 'Month DD, YYYY') >= current_date - interval '5 years';
+
+
+select current_date - interval '5 years'
+
 -- 7. Find all the movies/TV shows by director 'Rajiv Chilaka'!
 -- 8. List all TV shows with more than 5 seasons
 -- 9. Count the number of content items in each genre
